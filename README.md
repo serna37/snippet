@@ -61,6 +61,8 @@
 
 ---
 <!-- Description -->
-This repository is `Snippet` for [SirVer/ultisnips](https://github.com/SirVer/ultisnips).
+This repository is test of `Snippet` for [SirVer/ultisnips](https://github.com/SirVer/ultisnips).
+
+Also see [serna37/dotfiles](https://github.com/serna37/dotfiles).
 
 ---

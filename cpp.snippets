@@ -1,0 +1,471 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+# =========================================================
+# Math Template
+# =========================================================
+snippet PI "PI" b
+double PI = acos(-1);
+endsnippet
+
+snippet infinity "INFINITY" b
+constexpr int INF = 1001001001;
+constexpr ll LINF = 1001001001001001001ll;
+endsnippet
+
+snippet mod_num "mod" b
+constexpr int MOD = 998244353;
+constexpr int MOD = 1e9 + 7;
+endsnippet
+
+snippet is_integer "is integer" b
+auto is_integer = [](double x) -> bool {
+	return floor(x) == x;
+};
+endsnippet
+
+snippet matrix "matrix" b
+// int a[n][m];
+// int b[m][l];
+// ll ans[n][m];
+for (int i=0; i<n; ++i) {
+	for (int ii=0; ii<l; ++ii) {
+		// calc
+		ll calc=0;
+		for (int pp=0; pp<m; ++pp) {
+			calc += a[i][pp]*b[pp][ii];
+		}
+		ans[i][ii] = calc;
+	}
+}
+endsnippet
+
+snippet distance "distance" b
+auto distance = [](int x1, int y1, int x2, int y2) -> int {
+	return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+};
+endsnippet
+
+# =========================================================
+# in / out
+# =========================================================
+snippet arrin "arr in" b
+int ${1:N};
+cin >> $1;
+vector<${2:int}> ${3:A}($1);
+rep(i, $1) cin >> $3[i];
+endsnippet
+
+snippet arrin2 "arr in" b
+int ${1:N}, ${2:M};
+cin >> $1 >> $2;
+vector<${3:int}> ${4:A}(${5:N or M});
+rep(i, $5) cin >> $4[i];
+endsnippet
+
+snippet let2 "let 2" b
+${1:int} ${2:N}, ${3:M};
+endsnippet
+
+snippet vec2 "vector 2" b
+vector<${1:int}> ${2:A}(${3:N}), ${4:S}(${5:M});
+endsnippet
+
+snippet ccout "cout" b
+cout << ${1:variable} << endl;
+endsnippet
+
+# =========================================================
+# STL
+# =========================================================
+snippet ascii "ascii" b
+// A : 65
+// B : 66
+// ...
+// Z : 90
+// [ : 91
+// ...
+// a : 97
+// b : 98
+// ...
+// z : 122
+endsnippet
+
+snippet trans "transform" b
+std::transform(ALL(${1:str}), $1.begin(), ::${2:tolower});
+endsnippet
+
+snippet sort_Arr_Asc "asc" b
+sort(${1:arr}, $1+${2:n});
+endsnippet
+
+snippet sort_Arr_Desc "desc" b
+sort(${1:arr}, $1+${2:n}, greater<${3:int}>());
+endsnippet
+
+snippet sort_Asc "asc" b
+sort(ALL(${1:s}));
+endsnippet
+
+snippet sort_Desc "desc" b
+sort(${1:s}.rbegin(), $1.rend());
+endsnippet
+
+snippet reverse_Vec "reverse vector" b
+reverse(ALL(${1:A}));
+endsnippet
+
+snippet reverse_Arr "reverse arr" b
+reverse(${1:arr}, $1 + ${2:length});
+endsnippet
+
+snippet reverse_Str "reverse string" b
+reverse(ALL(${1:str}));
+endsnippet
+
+snippet uni "unique" b
+sort(ALL(${1:A})); A.erase(unique(ALL($1)), $1.end());
+endsnippet
+
+snippet count_Vec "count vector" biw
+count(ALL(${1:A}), ${2:chk_val});
+endsnippet
+
+snippet find_Vec "find vector" biw
+find(ALL(${1:A}), ${2:chk_val}) != $1.end();
+endsnippet
+
+snippet nextperm "next_permutation" biw
+next_permutation(ALL(${1:vector}))
+endsnippet
+
+snippet lowe "lower bound" biw
+lower_bound(ALL(${1:A}), ${2:chk});
+endsnippet
+
+# =========================================================
+# basic algo
+# =========================================================
+snippet maxVal "maxVal" b
+int ${1:maxVal} = 0;
+rep(i, ${2:N}) {
+	$1 = max($1, ${3:A}[i]);
+}
+endsnippet
+
+snippet minVal "minVal" b
+int ${1:minVal} = 1e9 + 7;
+rep(i, ${2:N}) {
+	$1 = min($1, ${3:A}[i]);
+}
+endsnippet
+
+snippet allmatch "allmatch" b
+bool allmatchFlg = true;
+// for
+// allmatchFlg &= true condition
+endsnippet
+
+snippet anymatch "anymatch" b
+bool anymatchFlg = false;
+// for
+// anymatchFlg |= true condition
+endsnippet
+
+# =========================================================
+# Algorithm
+# =========================================================
+snippet algo_is_prime "is prime" b
+auto is_prime = [](int num) -> bool {
+	if (num == 2) return true;
+	if (num < 2 || num % 2 == 0) return false;
+	double sqrtNum = sqrt(num);
+	for (int i = 3; i <= sqrtNum; i += 2) {
+		if (num % i == 0) return false;
+	}
+	return true;
+};
+endsnippet
+
+snippet algo_eratosthenes_sieve "sieve if eratosthenes" b
+vector<int> is_P(N + 1, true);
+is_P[0] = is_P[1] = false;
+for (int i = 2; i * i <= N; ++i) {
+	if (!is_P[i]) continue;
+	for (int j = i * i; j <= N; j += i) is_P[j] = false;
+}
+endsnippet
+
+snippet algo_modpow "modpow" b
+auto modpow = [](ll a, ll n, ll mod) -> ll {
+	ll res = 1;
+	while (n > 0) {
+		if (n & 1) res = res * a % mod;
+		a = a * a % mod;
+		n >>= 1;
+	}
+	return res;
+};
+endsnippet
+
+snippet algo_inverse_Fermat "Fermat" b
+auto modinv = [&](ll a, ll mod) -> ll { return modpow(a, mod - 2, mod); };
+endsnippet
+
+snippet algo_inverse_Euclid "extended Euclid" b
+auto modinv = [](ll a, ll m) -> ll {
+	ll b = m, u = 1, v = 0;
+	while (b) {
+		ll t = a / b;
+		a -= t * b;
+		swap(a, b);
+		u -= t * v;
+		swap(u, v);
+	}
+	u %= m;
+	if (u < 0) u += m;
+	return u;
+};
+endsnippet
+
+snippet algo_bit_loop "bit loop" b
+rep(bit, 1 << N) {
+	vector<int> tmp;
+	rep(i, N) if (bit & (1 << i)) tmp.push_back(i);
+	//
+}
+endsnippet
+
+snippet algo_2point_Shyakutori "shakutori" b
+int ans = 0, cur = 0;
+rep(i, N) {
+	while (cur < N and A[cur] < A[i] + M) ++cur;
+	ans = max(ans, cur - i);
+}
+endsnippet
+
+snippet algo_bfs_graph_1d "bfs graph support" b
+vector<vector<${1:int}>> Graph(N, vector<$1>(1, 0));
+queue<$1> q;
+vector<${2:int}> dist(N, -1);
+//vector<bool> used(N, false);
+//vector<int> counter(N + 1, 0);
+
+rep(i, N) {
+	$1 a, b;
+	cin >> a >> b;
+	Graph[a].push_back(b);
+	Graph[b].push_back(a);
+}
+
+q.push(0);
+dist[0] = 0;
+
+while (!q.empty()) {
+	$1 current_vertex = q.front();
+	q.pop();
+	for ($1 next_vertex : Graph[current_vertex]) {
+		if (dist[next_vertex] == -1) continue;
+		dist[next_vertex] = dist[current_vertex] + 1;
+		q.push(next_vertex);
+	}
+}
+endsnippet
+
+snippet algo_bfs_grid_2d "bfs grid support" b
+//vector<string> Grid(row);
+vector<vector<char>> Grid(row, vector<char>(column, '.'));
+vector<int> dx4 = {1, 0, -1, 0};
+vector<int> dy4 = {0, 1, 0, -1};
+vector<int> dx8 = {-1, -1, -1, 0, 0, 1, 1, 1};
+vector<int> dy8 = {-1, 0, 1, -1, 1, -1, 0, 1};
+queue<pi> q;
+vector<vector<bool>> used(row, vector<bool>(column, false));
+//vector<vector<int>> dist(row, vector<int>(column, -1));
+
+q.push({0, 0});
+used[0][0] = true;
+//dist[0][0] = 0;
+
+while (!q.empty()) {
+	pi current_xy = q.front();
+	q.pop();
+	for (int i = 0; i < 8; ++i) {
+		int x = dx8[i] + current_xy.first;
+		int y = dy8[i] + current_xy.second;
+		// only in range
+		if (x < 0 or y < 0 or column <= x or row <= y) continue;
+		// un visited, can go
+		if (!used[x][y] and Grid[x][y] == '#') {
+			q.push({x, y});
+			used[x][y] = true;
+			//dist[x][y] = dist[current_xy.first][current_xy.second] + 1;
+		}
+	}
+}
+endsnippet
+
+snippet algo_running_total "running total" b
+vector<int> ${1:sum}(N + 1, 0);
+rep(i, N) {
+	$1[i + 1] = $1[i] + A[i];
+}
+endsnippet
+
+snippet algo_dp_napsack "dp napsack support" b
+vector<vector<int>> dp(N + 1, vector<int>(W + 1, 0));
+for (int i = 0; i < N; ++i) {
+	int wi = weight[i];
+	int vi = value[i];
+	for (int w = 0; w <= W; ++w) {
+		if (w < wi) {
+			dp[i + 1][w] = dp[i][w];
+		} else {
+			dp[i + 1][w] = max(dp[i][w], dp[i][w - wi] + vi);
+		}
+	}
+}
+endsnippet
+
+snippet algo_dp_sum_partial "dp partial sum support" b
+vector<vector<int>> dp(N + 1, vector<int>(K + 1, false));
+dp[0][0] = true;
+for (int i = 0; i < N; ++i) {
+	int ai = A[i];
+	for (int k = 0; k <= K; ++k) {
+		dp[i + 1][k] = dp[i][k];
+		if (k >= ai) {
+			dp[i + 1][k] = dp[i][k] or dp[i][k - ai];
+		}
+	}
+}
+endsnippet
+
+snippet algo_cmopress "compress" b
+auto compress = []<class T>(vector<T> &vec) -> void {
+	auto v = vec;
+	sort(ALL(v));
+	v.erase(unique(ALL(v)), v.end());
+	rep(i, vec.size()) vec[i] = lower_bound(ALL(v), vec[i]) - v.begin();
+};
+endsnippet
+
+snippet algo_Seg_RMQ "Segment Tree RMQ" b
+class SegmentTreeRMQ {
+	const static ll ll_MAX = (1LL << 31) - 1;
+	int n_0; ll seg_tree[4 * 100007];
+  public:
+	SegmentTreeRMQ(int n) {
+		n_0 = 1; while (n_0 < n) n_0 <<= 1;
+		rep(i, 2 * n_0) seg_tree[i] = ll_MAX;
+	}
+	void update(int idx, ll val) {
+		idx += n_0 - 1; seg_tree[idx] = val;
+		while (idx > 0) { idx = (idx - 1) / 2; seg_tree[idx] = min(seg_tree[2 * idx + 1], seg_tree[2 * idx + 2]); }
+	}
+	ll query(int l, int r) {
+		int l_0 = l + n_0, r_0 = r + n_0; ll s = ll_MAX;
+		while (l_0 < r_0) { if (r_0 & 1) { --r_0; s = min(s, seg_tree[r_0 - 1]); }
+			if (l_0 & 1) { s = min(s, seg_tree[l_0 - 1]); ++l_0; }
+			l_0 >>= 1; r_0 >>= 1; } return s;
+	}
+};
+endsnippet
+
+# =========================================================
+# grammer
+# =========================================================
+snippet vv "vector2" b
+vector<vector<${1:int}>> ${2:A}(${3:N}, vector<$1>(${4:M}, ${5:0}));
+endsnippet
+
+snippet fori "for" b
+for (${1:int} ${2:i}=${3:0}; $2<${4:N}; ${5:++$2}) {
+	${6}
+}
+endsnippet
+
+snippet forv "for vector" b
+for (auto& ${1:v} : ${2:a}) {
+	${3}
+}
+endsnippet
+
+snippet re "simple repeat" b
+rep(${1:i}, ${2:N}) {
+	${3}
+}
+endsnippet
+
+snippet rel "simple repeat" b
+repl(${1:i}, ${2:N}) {
+	${3}
+}
+endsnippet
+
+snippet func "function" b
+${1:void} func(${2:int n}) {
+	${3}
+}
+endsnippet
+
+snippet func_lambda "function lambda" b
+auto ${1:func} = [&](${2:int a}) -> ${3:void} {
+	${4}
+};
+endsnippet
+
+snippet func_recursive "function recursive" b
+auto ${1:func} = [&](auto self, ${2:int a}) -> ${3:void} {
+	${4}
+	self(self, $2); // recursive
+};
+
+// TODO
+$1($1, );
+endsnippet
+
+# =========================================================
+# Template
+# =========================================================
+snippet xxx "template cpp for AtCoder" bA
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using pi = pair<int, int>;
+#define rep(i, N) for (int i = 0; i < (int)(N); ++i)
+#define repl(i, N) for (ll i = 0; i < (ll)(N); ++i)
+#define ALL(a) (a).begin(), (a).end()
+
+int main() {
+	${1}
+
+	//cout << fixed << setprecision(5);
+
+	return 0;
+}
+endsnippet
+
